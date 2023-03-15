@@ -1,35 +1,35 @@
 CREATE TABLE "user"
 (
-    id              SERIAL PRIMARY KEY,
-    name            TEXT         NOT NULL,
-    login           TEXT         NOT NULL,
-    password_hash   VARCHAR(128) NOT NULL,
-    profile_picture BYTEA
+    id            SERIAL8 PRIMARY KEY,
+    name          TEXT         NOT NULL,
+    login         TEXT         NOT NULL,
+    password_hash VARCHAR(128) NOT NULL,
+    picture_url   TEXT
 );
 
 CREATE TABLE anime
 (
-    id              SERIAL PRIMARY KEY,
+    id              SERIAL8 PRIMARY KEY,
     name            TEXT    NOT NULL,
     count_of_series INTEGER NOT NULL,
     genres          TEXT    NOT NULL,
     description     TEXT,
     release_year    DATE    NOT NULL,
-    picture         BYTEA   NOT NULL
+    picture_url     TEXT    NOT NULL
 );
 
 
 CREATE TABLE user_anime
 (
-    id                        SERIAL PRIMARY KEY,
+    id                        SERIAL8 PRIMARY KEY,
     number_of_episodes_viewed INTEGER DEFAULT 0        NOT NULL,
     favorite                  BOOLEAN DEFAULT FALSE    NOT NULL,
     comment                   TEXT,
     date_added                DATE                     NOT NULL,
     condition                 TEXT    DEFAULT 'Смотрю' NOT NULL,
     rating                    NUMERIC(1, 2),
-    anime_id                  INTEGER,
-    user_id                   INTEGER
+    anime_id                  BIGINT,
+    user_id                   BIGINT
 );
 ALTER TABLE user_anime
     ADD CONSTRAINT fk_anime
@@ -42,3 +42,10 @@ ALTER TABLE user_anime
             REFERENCES "user" (id)
             ON DELETE CASCADE;
 
+INSERT INTO ANIME (name, count_of_series, genres, description, release_year, picture_url)
+VALUES ('Сага о винленде', 24, 'Приключение', 'Про викингов...', '2019-04-20',
+        'https://www.kino-teatr.ru/movie/poster/145993/108424.jpg');
+
+drop table user_anime;
+drop table "user";
+drop table anime;
