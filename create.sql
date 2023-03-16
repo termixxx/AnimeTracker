@@ -1,4 +1,4 @@
-CREATE TABLE "user"
+CREATE TABLE user_account
 (
     id            SERIAL8 PRIMARY KEY,
     name          TEXT         NOT NULL,
@@ -19,9 +19,8 @@ CREATE TABLE anime
 );
 
 
-CREATE TABLE user_anime
+CREATE TABLE user_account_anime
 (
-    id                        SERIAL8 PRIMARY KEY,
     number_of_episodes_viewed INTEGER DEFAULT 0        NOT NULL,
     favorite                  BOOLEAN DEFAULT FALSE    NOT NULL,
     comment                   TEXT,
@@ -31,18 +30,18 @@ CREATE TABLE user_anime
     anime_id                  BIGINT,
     user_id                   BIGINT
 );
-ALTER TABLE user_anime
+ALTER TABLE user_account_anime
     ADD CONSTRAINT fk_anime
         FOREIGN KEY (anime_id)
             REFERENCES anime (id)
             ON DELETE CASCADE;
-ALTER TABLE user_anime
+ALTER TABLE user_account_anime
     ADD CONSTRAINT fk_user
         FOREIGN KEY (user_id)
-            REFERENCES "user" (id)
+            REFERENCES user_account (id)
             ON DELETE CASCADE;
 
 -- дропы
-drop table user_anime;
-drop table "user";
+drop table user_account_anime;
+drop table user_account;
 drop table anime;

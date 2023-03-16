@@ -4,8 +4,7 @@ import org.example.enums.Condition;
 
 import java.time.LocalDate;
 
-public class UserAnime {
-    private final Long id;
+public class UserAccountAnime {
     private Integer numberOfEpisodesViewed;
     private Boolean favorite;
     private String comment;
@@ -15,8 +14,7 @@ public class UserAnime {
     private final Long animeId;
     private final Long userId;
 
-    public UserAnime(Long id, Integer numberOfEpisodesViewed, Boolean favorite, String comment, LocalDate dateAdded, Enum<Condition> conditionEnum, Double rating, Long animeId, Long userId) {
-        this.id = id;
+    public UserAccountAnime(Integer numberOfEpisodesViewed, Boolean favorite, String comment, LocalDate dateAdded, Enum<Condition> conditionEnum, Double rating, Long animeId, Long userId) {
         this.numberOfEpisodesViewed = numberOfEpisodesViewed;
         this.favorite = favorite;
         this.comment = comment;
@@ -25,10 +23,6 @@ public class UserAnime {
         this.rating = rating;
         this.animeId = animeId;
         this.userId = userId;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Integer getNumberOfEpisodesViewed() {

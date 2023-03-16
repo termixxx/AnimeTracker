@@ -2,13 +2,14 @@ package org.example.service;
 
 import org.example.dao.AnimeDAO;
 import org.example.entities.Anime;
-import org.example.jdbcHelper.ConnectionService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnimeService extends ConnectionService implements AnimeDAO {
+import static org.example.jdbcHelper.ConnectionService.getConnection;
+
+public class AnimeService implements AnimeDAO {
     Connection connection = getConnection();
 
     @Override
@@ -16,7 +17,20 @@ public class AnimeService extends ConnectionService implements AnimeDAO {
         String animeQuery =
                 "INSERT INTO ANIME (name, count_of_series, genres, description, release_year, picture_url)"
                         + " VALUES (?, ?, ?, ?, ?, ?)";
-        setAll(anime, animeQuery);
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(animeQuery);
+
+            preparedStatement.setString(1, anime.getName());
+            preparedStatement.setInt(2, anime.getCountOfSeries());
+            preparedStatement.setString(3, anime.getGenres());
+            preparedStatement.setString(4, anime.getDescription());
+            preparedStatement.setDate(5, Date.valueOf(anime.getReleaseYear()));
+            preparedStatement.setString(6, anime.getPictureURL());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -77,16 +91,13 @@ public class AnimeService extends ConnectionService implements AnimeDAO {
     @Override
     public void update(Anime anime) {
         String animeQuery =
-                "UPDATE ANIME SET name=?,"
-                        + "count_of_series=?,"
-                        + "genres=?,"
-                        + "description=?,"
-                        + "release_year=?,"
-                        + "picture_url=?";
-        setAll(anime, animeQuery);
-    }
-
-    private void setAll(Anime anime, String animeQuery) {
+                "UPDATE anime SET name = ?,"
+                        + "count_of_series = ?,"
+                        + "genres = ?,"
+                        + "description = ?,"
+                        + "release_year = ?,"
+                        + "picture_url = ?"
+                        + "WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(animeQuery);
 
@@ -96,6 +107,7 @@ public class AnimeService extends ConnectionService implements AnimeDAO {
             preparedStatement.setString(4, anime.getDescription());
             preparedStatement.setDate(5, Date.valueOf(anime.getReleaseYear()));
             preparedStatement.setString(6, anime.getPictureURL());
+            preparedStatement.setLong(7, anime.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -108,9 +120,7 @@ public class AnimeService extends ConnectionService implements AnimeDAO {
         String animeQuery = "DELETE FROM anime WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(animeQuery);
-
             preparedStatement.setLong(1, anime.getId());
-
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
