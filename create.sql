@@ -42,10 +42,7 @@ ALTER TABLE user_anime
             REFERENCES "user" (id)
             ON DELETE CASCADE;
 
-INSERT INTO ANIME (name, count_of_series, genres, description, release_year, picture_url)
-VALUES ('Сага о винленде', 24, 'Приключение', 'Про викингов...', '2019-04-20',
-        'https://www.kino-teatr.ru/movie/poster/145993/108424.jpg');
-
+-- дропы
 drop table user_anime;
 drop table "user";
 drop table anime;

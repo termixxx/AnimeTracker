@@ -69,4 +69,17 @@ public class Anime {
     public void setPictureURL(String pictureURL) {
         this.pictureURL = pictureURL;
     }
+
+    @Override
+    public String toString() {
+        return "Anime{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", countOfSeries=" + countOfSeries +
+                ", genres='" + genres + '\'' +
+                ", description='" + description + '\'' +
+                ", releaseYear=" + releaseYear +
+                ", pictureURL='" + pictureURL + '\'' +
+                '}';
+    }
 }
