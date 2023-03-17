@@ -2,15 +2,16 @@ package org.example.service;
 
 import org.example.dao.AnimeDAO;
 import org.example.entities.Anime;
+import org.example.jdbcHelper.ConnectionService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.jdbcHelper.ConnectionService.getConnection;
 
 public class AnimeService implements AnimeDAO {
-    Connection connection = getConnection();
+    ConnectionService connectionService = new ConnectionService();
+    Connection connection = connectionService.getConnection();
 
     @Override
     public void add(Anime anime) {
@@ -36,7 +37,7 @@ public class AnimeService implements AnimeDAO {
     @Override
     public List<Anime> getAll() {
         List<Anime> animeList = new ArrayList<>();
-        String animeQuery = "SELECT * FROM anime";
+        String animeQuery = "SELECT * FROM anime"; // TODO: 17.03.2023 исправить * на список полей
         try {
             Statement statement = connection.createStatement();
 
@@ -83,7 +84,7 @@ public class AnimeService implements AnimeDAO {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace();// TODO: 17.03.2023 logging
         }
         return anime;
     }

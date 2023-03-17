@@ -3,15 +3,16 @@ package org.example.service;
 import org.example.dao.UserAccountAnimeDAO;
 import org.example.entities.UserAccountAnime;
 import org.example.enums.Condition;
+import org.example.jdbcHelper.ConnectionService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.jdbcHelper.ConnectionService.getConnection;
 
 public class UserAccountAnimeService implements UserAccountAnimeDAO {
-    Connection connection = getConnection();
+    ConnectionService connectionService = new ConnectionService();
+    Connection connection = connectionService.getConnection();
 
     @Override
     public void add(UserAccountAnime userAccountAnime) {

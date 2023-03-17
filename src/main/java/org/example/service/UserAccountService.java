@@ -2,15 +2,16 @@ package org.example.service;
 
 import org.example.dao.UserAccountDAO;
 import org.example.entities.UserAccount;
+import org.example.jdbcHelper.ConnectionService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.jdbcHelper.ConnectionService.getConnection;
 
 public class UserAccountService implements UserAccountDAO {
-    Connection connection = getConnection();
+    ConnectionService connectionService = new ConnectionService();
+    Connection connection = connectionService.getConnection();
 
     @Override
     public void add(UserAccount userAccount) {
@@ -21,7 +22,7 @@ public class UserAccountService implements UserAccountDAO {
 
             preparedStatement.setString(1, userAccount.getName());
             preparedStatement.setString(2, userAccount.getLogin());
-            preparedStatement.setString(3, userAccount.getPasswordHash());
+            preparedStatement.setString(3, userAccount.getPassword());
             preparedStatement.setString(4, userAccount.getPictureURL());
 
             preparedStatement.executeUpdate();
@@ -92,7 +93,7 @@ public class UserAccountService implements UserAccountDAO {
 
             preparedStatement.setString(1, userAccount.getName());
             preparedStatement.setString(2, userAccount.getLogin());
-            preparedStatement.setString(3, userAccount.getPasswordHash());
+            preparedStatement.setString(3, userAccount.getPassword());
             preparedStatement.setString(4, userAccount.getPictureURL());
             preparedStatement.setLong(5, userAccount.getId());
 

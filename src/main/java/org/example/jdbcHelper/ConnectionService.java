@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionService {
-    public static Connection getConnection() {
+    public Connection getConnection() {
         var props = new Properties();
 
         try (InputStream in = Files.newInputStream(Paths.get("src/main/resources/db.properties"))) {

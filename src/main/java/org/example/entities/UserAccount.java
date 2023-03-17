@@ -4,14 +4,14 @@ public class UserAccount {
     private final Long id;
     private String name;
     private final String login;
-    private String passwordHash;
+    private String password;
     private String pictureURL;
 
-    public UserAccount(Long id, String name, String login, String passwordHash, String pictureURL) {
+    public UserAccount(Long id, String name, String login, String password, String pictureURL) {
         this.id = id;
         this.name = name;
         this.login = login;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.pictureURL = pictureURL;
     }
 
@@ -31,12 +31,12 @@ public class UserAccount {
         return login;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPictureURL() {
