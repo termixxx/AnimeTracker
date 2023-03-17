@@ -16,7 +16,7 @@ public class AnimeService implements AnimeDAO {
     @Override
     public void add(Anime anime) {
         String animeQuery =
-                "INSERT INTO ANIME (name, count_of_series, genres, description, release_year, picture_url)"
+                "INSERT INTO anime (name, count_of_series, genres, description, release_year, picture_url)"
                         + " VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(animeQuery);
@@ -37,7 +37,9 @@ public class AnimeService implements AnimeDAO {
     @Override
     public List<Anime> getAll() {
         List<Anime> animeList = new ArrayList<>();
-        String animeQuery = "SELECT * FROM anime"; // TODO: 17.03.2023 исправить * на список полей
+        String animeQuery = "SELECT id, name, count_of_series, " +
+                "genres, description, release_year, picture_url " +
+                "FROM anime";
         try {
             Statement statement = connection.createStatement();
 
@@ -65,7 +67,9 @@ public class AnimeService implements AnimeDAO {
     @Override
     public Anime getById(Long id) {
         Anime anime = null;
-        String animeQuery = "SELECT * FROM anime WHERE id = ?";
+        String animeQuery = "SELECT id, name, count_of_series, " +
+                "genres, description, release_year, picture_url " +
+                "FROM anime WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(animeQuery);
 

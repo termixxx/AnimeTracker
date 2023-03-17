@@ -28,5 +28,5 @@ CREATE TABLE user_account_anime
     condition                 TEXT    DEFAULT 'Смотрю' NOT NULL,
     rating                    NUMERIC(1, 2)            NULL,
     anime_id                  BIGINT REFERENCES anime (id),
-    user_account_id           BIGINT REFERENCES user_account (id) -- поменять в коде юзераккаунт
+    user_account_id           BIGINT REFERENCES user_account (id)
 );

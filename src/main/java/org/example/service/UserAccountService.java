@@ -15,7 +15,7 @@ public class UserAccountService implements UserAccountDAO {
 
     @Override
     public void add(UserAccount userAccount) {
-        String userQuery = "INSERT INTO user_account(name, login, password_hash, picture_url)"
+        String userQuery = "INSERT INTO user_account(name, login, password, picture_url)"
                 + "VALUES(?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(userQuery);
@@ -34,7 +34,8 @@ public class UserAccountService implements UserAccountDAO {
     @Override
     public List<UserAccount> getAll() {
         List<UserAccount> userAccountList = new ArrayList<>();
-        String userQuery = "SELECT * FROM user_account";
+        String userQuery = "SELECT id, name, login, password, picture_url" +
+                " FROM user_account WHERE id = ?";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(userQuery);
@@ -43,7 +44,7 @@ public class UserAccountService implements UserAccountDAO {
                         resultSet.getLong("id"),
                         resultSet.getString("name"),
                         resultSet.getString("login"),
-                        resultSet.getString("password_hash"),
+                        resultSet.getString("password"),
                         resultSet.getString("picture_url")
                 );
 
@@ -58,7 +59,8 @@ public class UserAccountService implements UserAccountDAO {
     @Override
     public UserAccount getById(Long id) {
         UserAccount userAccount = null;
-        String userQuery = "SELECT * FROM user_account WHERE id = ?";
+        String userQuery = "SELECT id, name, login, password, picture_url" +
+                " FROM user_account WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(userQuery);
 
@@ -71,7 +73,7 @@ public class UserAccountService implements UserAccountDAO {
                         resultSet.getLong("id"),
                         resultSet.getString("name"),
                         resultSet.getString("login"),
-                        resultSet.getString("password_hash"),
+                        resultSet.getString("password"),
                         resultSet.getString("picture_url"));
             }
         } catch (SQLException e) {
@@ -85,7 +87,7 @@ public class UserAccountService implements UserAccountDAO {
         String userQuery =
                 "UPDATE user_account SET name = ?,"
                         + "login = ?,"
-                        + "password_hash = ?,"
+                        + "password = ?,"
                         + "picture_url = ?"
                         + "WHERE id = ?";
         try {

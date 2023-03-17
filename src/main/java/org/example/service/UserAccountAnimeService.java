@@ -37,11 +37,14 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
 
     @Override
     public List<UserAccountAnime> getAll() {
-        String userAnimeQuery = "SELECT * FROM user_account_anime";
+        String userAccountAnimeQuery = "SELECT number_of_episodes_viewed, favorite, " +
+                "comment, date_added, condition, rating, " +
+                "anime_id, user_account_id " +
+                "FROM user_account_anime";
         List<UserAccountAnime> userAccountAnimeList = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(userAnimeQuery);
+            ResultSet resultSet = statement.executeQuery(userAccountAnimeQuery);
             while (resultSet.next()) {
                 UserAccountAnime userAccountAnime = new UserAccountAnime(
                         resultSet.getInt("number_of_episodes_viewed"),
@@ -51,7 +54,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
                         (Condition) resultSet.getObject("condition"),
                         resultSet.getDouble("rating"),
                         resultSet.getLong("anime_id"),
-                        resultSet.getLong("user_id")
+                        resultSet.getLong("user_account_id")
                 );
                 userAccountAnimeList.add(userAccountAnime);
             }
@@ -64,9 +67,13 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
     @Override
     public UserAccountAnime getByAnimeIdAndUserId(Long animeId, Long userId) {
         UserAccountAnime userAccountAnime = null;
-        String userAccountQuery = "SELECT * FROM user_account_anime WHERE anime_id = ? AND user_id = ?";
+        String userAccountAnimeQuery = "SELECT number_of_episodes_viewed, favorite, " +
+                "comment, date_added, condition, rating, " +
+                "anime_id, user_account_id " +
+                "FROM user_account_anime " +
+                "WHERE anime_id = ? AND user_account_id = ?";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(userAccountQuery);
+            PreparedStatement preparedStatement = connection.prepareStatement(userAccountAnimeQuery);
 
             preparedStatement.setLong(1, animeId);
             preparedStatement.setLong(2, userId);
@@ -80,7 +87,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
                         (Condition) resultSet.getObject("condition"),
                         resultSet.getDouble("rating"),
                         resultSet.getLong("anime_id"),
-                        resultSet.getLong("user_id")
+                        resultSet.getLong("user_account_id")
                 );
             }
         } catch (SQLException e) {
@@ -98,7 +105,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
                         + "date_added = ?,"
                         + "condition = ?,"
                         + "rating = ?"
-                        + "WHERE anime_id = ? && user_id = ?";
+                        + "WHERE anime_id = ? && user_account_id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(userAccountQuery);
 
@@ -119,7 +126,8 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
 
     @Override
     public void remove(UserAccountAnime userAccountAnime) {
-        String userAccountQuery = "DELETE FROM user_account_anime WHERE anime_id = ? AND user_id = ?";
+        String userAccountQuery = "DELETE FROM user_account_anime " +
+                "WHERE anime_id = ? AND user_account_id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(userAccountQuery);
             preparedStatement.setLong(1, userAccountAnime.getAnimeId());
