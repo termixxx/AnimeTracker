@@ -2,7 +2,7 @@ CREATE TABLE user_account
 (
     id          SERIAL8 PRIMARY KEY,
     name        TEXT NOT NULL,
-    login       TEXT NOT NULL,
+    login       TEXT NOT NULL UNIQUE,
     password    TEXT NOT NULL,
     picture_url TEXT NULL
 );
@@ -10,7 +10,7 @@ CREATE TABLE user_account
 CREATE TABLE anime
 (
     id              SERIAL8 PRIMARY KEY,
-    name            TEXT    NOT NULL,
+    name            TEXT    NOT NULL UNIQUE,
     count_of_series INTEGER NOT NULL,
     genres          TEXT    NOT NULL,
     description     TEXT    NUll,

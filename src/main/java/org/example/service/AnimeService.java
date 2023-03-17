@@ -1,5 +1,7 @@
 package org.example.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.dao.AnimeDAO;
 import org.example.entities.Anime;
 import org.example.jdbcHelper.ConnectionService;
@@ -12,6 +14,7 @@ import java.util.List;
 public class AnimeService implements AnimeDAO {
     ConnectionService connectionService = new ConnectionService();
     Connection connection = connectionService.getConnection();
+    private static final Logger logger = LogManager.getLogger(AnimeService.class);
 
     @Override
     public void add(Anime anime) {
@@ -30,7 +33,7 @@ public class AnimeService implements AnimeDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка получения добавления аниме:\n" + e.getMessage());
         }
     }
 
@@ -59,7 +62,7 @@ public class AnimeService implements AnimeDAO {
                 animeList.add(anime);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка получения списка аниме:\n" + e.getMessage());
         }
         return animeList;
     }
@@ -88,7 +91,7 @@ public class AnimeService implements AnimeDAO {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();// TODO: 17.03.2023 logging
+            logger.error("Ошибка получения аниме по id:\n" + e.getMessage());
         }
         return anime;
     }
@@ -116,7 +119,7 @@ public class AnimeService implements AnimeDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка обновления аниме:\n" + e.getMessage());
         }
     }
 
@@ -128,7 +131,7 @@ public class AnimeService implements AnimeDAO {
             preparedStatement.setLong(1, anime.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка удаления аниме:\n" + e.getMessage());
         }
     }
 }

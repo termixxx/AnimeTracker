@@ -1,5 +1,7 @@
 package org.example.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.dao.UserAccountDAO;
 import org.example.entities.UserAccount;
 import org.example.jdbcHelper.ConnectionService;
@@ -12,6 +14,7 @@ import java.util.List;
 public class UserAccountService implements UserAccountDAO {
     ConnectionService connectionService = new ConnectionService();
     Connection connection = connectionService.getConnection();
+    private static final Logger logger = LogManager.getLogger(UserAccountService.class);
 
     @Override
     public void add(UserAccount userAccount) {
@@ -27,7 +30,7 @@ public class UserAccountService implements UserAccountDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка добавления пользователя:\n" + e.getMessage());
         }
     }
 
@@ -51,7 +54,7 @@ public class UserAccountService implements UserAccountDAO {
                 userAccountList.add(userAccount);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка получения всех пользователей:\n" + e.getMessage());
         }
         return userAccountList;
     }
@@ -77,7 +80,7 @@ public class UserAccountService implements UserAccountDAO {
                         resultSet.getString("picture_url"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка получения пользователя по id:\n" + e.getMessage());
         }
         return userAccount;
     }
@@ -101,7 +104,7 @@ public class UserAccountService implements UserAccountDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка изменения пользователя:\n" + e.getMessage());
         }
     }
 
@@ -113,7 +116,7 @@ public class UserAccountService implements UserAccountDAO {
             preparedStatement.setLong(1, userAccount.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка удаления пользователя:\n" + e.getMessage());
         }
     }
 }

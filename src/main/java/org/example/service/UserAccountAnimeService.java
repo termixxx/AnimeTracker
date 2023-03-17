@@ -1,5 +1,7 @@
 package org.example.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.dao.UserAccountAnimeDAO;
 import org.example.entities.UserAccountAnime;
 import org.example.enums.Condition;
@@ -13,6 +15,7 @@ import java.util.List;
 public class UserAccountAnimeService implements UserAccountAnimeDAO {
     ConnectionService connectionService = new ConnectionService();
     Connection connection = connectionService.getConnection();
+    private static final Logger logger = LogManager.getLogger(UserAccountAnimeService.class);
 
     @Override
     public void add(UserAccountAnime userAccountAnime) {
@@ -31,7 +34,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка добавления аниме для пользователя:\n" + e.getMessage());
         }
     }
 
@@ -59,7 +62,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
                 userAccountAnimeList.add(userAccountAnime);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка получения всех аниме для пользователя:\n" + e.getMessage());
         }
         return userAccountAnimeList;
     }
@@ -91,7 +94,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
                 );
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка получения аниме по animeId для пользователя по userId:\n" + e.getMessage());
         }
         return userAccountAnime;
     }
@@ -120,7 +123,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка обновления аниме для пользователя:\n" + e.getMessage());
         }
     }
 
@@ -134,7 +137,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
             preparedStatement.setLong(2, userAccountAnime.getUserId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Ошибка удаления аниме для пользователя:\n" + e.getMessage());
         }
     }
 }
