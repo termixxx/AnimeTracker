@@ -13,6 +13,8 @@ public interface AnimeDAO {
 
     Anime getById(Long id);
 
+    Anime findByName(String name);
+
     // update
     void update(Anime anime);
 

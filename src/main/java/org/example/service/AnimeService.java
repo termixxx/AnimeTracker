@@ -33,7 +33,7 @@ public class AnimeService implements AnimeDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Ошибка получения добавления аниме:\n" + e.getMessage());
+            logger.error("Ошибка добавления аниме:\n" + e.getMessage());
         }
     }
 
@@ -97,6 +97,35 @@ public class AnimeService implements AnimeDAO {
     }
 
     @Override
+    public Anime findByName(String name) {
+        Anime anime = null;
+        String animeQuery = "SELECT id, name, count_of_series, " +
+                "genres, description, release_year, picture_url " +
+                "FROM anime WHERE name = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(animeQuery);
+
+            preparedStatement.setString(1, name);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                anime = new Anime(
+                        resultSet.getLong("id"),
+                        resultSet.getString("name"),
+                        resultSet.getInt("count_of_series"),
+                        resultSet.getString("genres"),
+                        resultSet.getString("description"),
+                        resultSet.getDate("release_year").toLocalDate(),
+                        resultSet.getString("picture_url")
+                );
+            }
+        } catch (SQLException e) {
+            logger.error("Ошибка получения поиска аниме по названию:\n" + e.getMessage());
+        }
+        return anime;
+    }
+
+    @Override
     public void update(Anime anime) {
         String animeQuery =
                 "UPDATE anime SET name = ?,"
@@ -104,7 +133,7 @@ public class AnimeService implements AnimeDAO {
                         + "genres = ?,"
                         + "description = ?,"
                         + "release_year = ?,"
-                        + "picture_url = ?"
+                        + "picture_url = ? "
                         + "WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(animeQuery);

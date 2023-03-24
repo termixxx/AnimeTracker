@@ -38,7 +38,7 @@ public class UserAccountService implements UserAccountDAO {
     public List<UserAccount> getAll() {
         List<UserAccount> userAccountList = new ArrayList<>();
         String userQuery = "SELECT id, name, login, password, picture_url" +
-                " FROM user_account WHERE id = ?";
+                " FROM user_account";
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(userQuery);
@@ -86,12 +86,38 @@ public class UserAccountService implements UserAccountDAO {
     }
 
     @Override
+    public UserAccount findByName(String name) {
+        UserAccount userAccount = null;
+        String userQuery = "SELECT id, name, login, password, picture_url" +
+                " FROM user_account WHERE name = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(userQuery);
+
+            preparedStatement.setString(1, name);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                userAccount = new UserAccount(
+                        resultSet.getLong("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("login"),
+                        resultSet.getString("password"),
+                        resultSet.getString("picture_url"));
+            }
+        } catch (SQLException e) {
+            logger.error("Ошибка нахождения пользователя по name:\n" + e.getMessage());
+        }
+        return userAccount;
+    }
+
+    @Override
     public void update(UserAccount userAccount) {
         String userQuery =
                 "UPDATE user_account SET name = ?,"
                         + "login = ?,"
                         + "password = ?,"
-                        + "picture_url = ?"
+                        + "picture_url = ? "
                         + "WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(userQuery);

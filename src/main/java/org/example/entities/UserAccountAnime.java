@@ -10,11 +10,11 @@ public class UserAccountAnime {
     private String comment;
     private final LocalDate dateAdded;
     private Enum<Condition> conditionEnum;
-    private Double rating;
+    private Integer rating;
     private final Long animeId;
     private final Long userId;
 
-    public UserAccountAnime(Integer numberOfEpisodesViewed, Boolean favorite, String comment, LocalDate dateAdded, Enum<Condition> conditionEnum, Double rating, Long animeId, Long userId) {
+    public UserAccountAnime(Integer numberOfEpisodesViewed, Boolean favorite, String comment, LocalDate dateAdded, Enum<Condition> conditionEnum, Integer rating, Long animeId, Long userId) {
         this.numberOfEpisodesViewed = numberOfEpisodesViewed;
         this.favorite = favorite;
         this.comment = comment;
@@ -61,11 +61,11 @@ public class UserAccountAnime {
         this.conditionEnum = conditionEnum;
     }
 
-    public Double getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
@@ -75,5 +75,19 @@ public class UserAccountAnime {
 
     public Long getUserId() {
         return userId;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAccountAnime{" +
+                "numberOfEpisodesViewed=" + numberOfEpisodesViewed +
+                ", favorite=" + favorite +
+                ", comment='" + comment + '\'' +
+                ", dateAdded=" + dateAdded +
+                ", conditionEnum=" + conditionEnum +
+                ", rating=" + rating +
+                ", animeId=" + animeId +
+                ", userId=" + userId +
+                '}';
     }
 }

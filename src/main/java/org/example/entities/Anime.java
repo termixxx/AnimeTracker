@@ -82,4 +82,15 @@ public class Anime {
                 ", pictureURL='" + pictureURL + '\'' +
                 '}';
     }
+
+    public String toTest() {
+        return "Anime{" +
+                "name='" + name + '\'' +
+                ", countOfSeries=" + countOfSeries +
+                ", genres='" + genres + '\'' +
+                ", description='" + description + '\'' +
+                ", releaseYear=" + releaseYear +
+                ", pictureURL='" + pictureURL + '\'' +
+                '}';
+    }
 }

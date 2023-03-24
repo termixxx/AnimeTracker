@@ -46,4 +46,24 @@ public class UserAccount {
     public void setPictureURL(String pictureURL) {
         this.pictureURL = pictureURL;
     }
+
+    @Override
+    public String toString() {
+        return "UserAccount{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", pictureURL='" + pictureURL + '\'' +
+                '}';
+    }
+
+    public String toTest() {
+        return "UserAccount{" +
+                "name='" + name + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", pictureURL='" + pictureURL + '\'' +
+                '}';
+    }
 }

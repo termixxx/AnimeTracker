@@ -26,7 +26,10 @@ CREATE TABLE user_account_anime
     comment                   TEXT                     NULL,
     date_added                DATE                     NOT NULL,
     condition                 TEXT    DEFAULT 'Смотрю' NOT NULL,
-    rating                    NUMERIC(1, 2)            NULL,
+    rating                    INTEGER                  NULL,
     anime_id                  BIGINT REFERENCES anime (id),
     user_account_id           BIGINT REFERENCES user_account (id)
 );
+
+ALTER TABLE user_account_anime
+    ADD CONSTRAINT constraint_name UNIQUE (anime_id, user_account_id);

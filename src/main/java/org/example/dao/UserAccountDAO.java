@@ -13,6 +13,8 @@ public interface UserAccountDAO {
 
     UserAccount getById(Long id);
 
+    UserAccount findByName(String name);
+
     // update
     void update(UserAccount userAccount);
 

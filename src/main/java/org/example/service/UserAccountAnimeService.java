@@ -28,7 +28,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
             preparedStatement.setString(3, userAccountAnime.getComment());
             preparedStatement.setDate(4, Date.valueOf(userAccountAnime.getDateAdded()));
             preparedStatement.setString(5, userAccountAnime.getConditionEnum().toString());
-            preparedStatement.setDouble(6, userAccountAnime.getRating());
+            preparedStatement.setInt(6, userAccountAnime.getRating());
             preparedStatement.setLong(7, userAccountAnime.getAnimeId());
             preparedStatement.setLong(8, userAccountAnime.getUserId());
 
@@ -54,8 +54,8 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
                         resultSet.getBoolean("favorite"),
                         resultSet.getString("comment"),
                         resultSet.getDate("date_added").toLocalDate(),
-                        (Condition) resultSet.getObject("condition"),
-                        resultSet.getDouble("rating"),
+                        Condition.valueOf(resultSet.getString("condition")),
+                        resultSet.getInt("rating"),
                         resultSet.getLong("anime_id"),
                         resultSet.getLong("user_account_id")
                 );
@@ -87,8 +87,8 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
                         resultSet.getBoolean("favorite"),
                         resultSet.getString("comment"),
                         resultSet.getDate("date_added").toLocalDate(),
-                        (Condition) resultSet.getObject("condition"),
-                        resultSet.getDouble("rating"),
+                        Condition.valueOf(resultSet.getString("condition")),
+                        resultSet.getInt("rating"),
                         resultSet.getLong("anime_id"),
                         resultSet.getLong("user_account_id")
                 );
@@ -102,13 +102,13 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
     @Override
     public void update(UserAccountAnime userAccountAnime) {
         String userAccountQuery =
-                "UPDATE user_account_anime SET number_of_episodes_viewed=?,"
+                "UPDATE user_account_anime SET number_of_episodes_viewed = ?,"
                         + "favorite = ?,"
                         + "comment = ?,"
                         + "date_added = ?,"
                         + "condition = ?,"
-                        + "rating = ?"
-                        + "WHERE anime_id = ? && user_account_id = ?";
+                        + "rating = ? "
+                        + "WHERE anime_id = ? AND user_account_id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(userAccountQuery);
 
@@ -117,7 +117,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
             preparedStatement.setString(3, userAccountAnime.getComment());
             preparedStatement.setDate(4, Date.valueOf(userAccountAnime.getDateAdded()));
             preparedStatement.setString(5, userAccountAnime.getConditionEnum().toString());
-            preparedStatement.setDouble(6, userAccountAnime.getRating());
+            preparedStatement.setInt(6, userAccountAnime.getRating());
             preparedStatement.setLong(7, userAccountAnime.getAnimeId());
             preparedStatement.setLong(8, userAccountAnime.getUserId());
 
