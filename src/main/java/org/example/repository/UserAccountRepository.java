@@ -1,22 +1,20 @@
-package org.example.service;
+package org.example.repository;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.dao.UserAccountDAO;
 import org.example.entities.UserAccount;
-import org.example.jdbcHelper.ConnectionService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserAccountService implements UserAccountDAO {
-    ConnectionService connectionService = new ConnectionService();
-    Connection connection = connectionService.getConnection();
-    private static final Logger logger = LogManager.getLogger(UserAccountService.class);
+public class UserAccountRepository {
+    ConnectionFactory connectionFactory = new ConnectionFactory();
+    Connection connection = connectionFactory.getConnection();
+    private static final Logger logger = LogManager.getLogger(UserAccountRepository.class);
 
-    @Override
+
     public void add(UserAccount userAccount) {
         String userQuery = "INSERT INTO user_account(name, login, password, picture_url)"
                 + "VALUES(?, ?, ?, ?)";
@@ -34,7 +32,7 @@ public class UserAccountService implements UserAccountDAO {
         }
     }
 
-    @Override
+
     public List<UserAccount> getAll() {
         List<UserAccount> userAccountList = new ArrayList<>();
         String userQuery = "SELECT id, name, login, password, picture_url" +
@@ -59,7 +57,7 @@ public class UserAccountService implements UserAccountDAO {
         return userAccountList;
     }
 
-    @Override
+
     public UserAccount getById(Long id) {
         UserAccount userAccount = null;
         String userQuery = "SELECT id, name, login, password, picture_url" +
@@ -85,7 +83,7 @@ public class UserAccountService implements UserAccountDAO {
         return userAccount;
     }
 
-    @Override
+
     public UserAccount findByName(String name) {
         UserAccount userAccount = null;
         String userQuery = "SELECT id, name, login, password, picture_url" +
@@ -111,7 +109,7 @@ public class UserAccountService implements UserAccountDAO {
         return userAccount;
     }
 
-    @Override
+
     public void update(UserAccount userAccount) {
         String userQuery =
                 "UPDATE user_account SET name = ?,"
@@ -134,7 +132,7 @@ public class UserAccountService implements UserAccountDAO {
         }
     }
 
-    @Override
+
     public void remove(UserAccount userAccount) {
         String userQuery = "DELETE FROM user_account WHERE id = ?";
         try {

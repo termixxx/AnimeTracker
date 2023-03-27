@@ -3,10 +3,10 @@ package org.example.logic;
 import org.example.entities.Anime;
 import org.example.entities.UserAccount;
 import org.example.entities.UserAccountAnime;
-import org.example.enums.Condition;
-import org.example.service.AnimeService;
-import org.example.service.UserAccountAnimeService;
-import org.example.service.UserAccountService;
+import org.example.entities.enums.Condition;
+import org.example.repository.AnimeRepository;
+import org.example.repository.UserAccountAnimeRepository;
+import org.example.repository.UserAccountRepository;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -18,11 +18,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class UserAccountAnimeServiceTest {
-    UserAccountAnimeService userAccountAnimeService = new UserAccountAnimeService();
-    AnimeService animeService = new AnimeService();
-    UserAccountService userAccountService = new UserAccountService();
-    UserAccount user = userAccountService.findByName("Jastin");
+public class UserAccountAnimeRepositoryTest {
+    UserAccountAnimeRepository userAccountAnimeRepository = new UserAccountAnimeRepository();
+    AnimeRepository animeRepository = new AnimeRepository();
+    UserAccountRepository userAccountRepository = new UserAccountRepository();
+    UserAccount user = userAccountRepository.findByName("Jastin");
 
     @Test
     public void addAndGetByIdAnimeAndIdUser() {
@@ -34,8 +34,8 @@ public class UserAccountAnimeServiceTest {
                 "Про викингов",
                 LocalDate.of(20018, 8, 11),
                 "img");
-        animeService.add(saga);
-        Anime anime = animeService.findByName("Сага о винленде 1 сезон");
+        animeRepository.add(saga);
+        Anime anime = animeRepository.findByName("Сага о винленде 1 сезон");
         UserAccountAnime userAccountAnime = new UserAccountAnime(
                 2,
                 false,
@@ -47,8 +47,8 @@ public class UserAccountAnimeServiceTest {
                 user.getId()
         );
 
-        userAccountAnimeService.add(userAccountAnime);
-        UserAccountAnime userAnimeFromDB = userAccountAnimeService.getByAnimeIdAndUserId(
+        userAccountAnimeRepository.add(userAccountAnime);
+        UserAccountAnime userAnimeFromDB = userAccountAnimeRepository.getByAnimeIdAndUserId(
                 anime.getId(),
                 user.getId()
         );
@@ -59,7 +59,7 @@ public class UserAccountAnimeServiceTest {
 
     @Test
     public void updateUserAnime() {
-        Anime anime = animeService.findByName("Сага о винленде 1 сезон");
+        Anime anime = animeRepository.findByName("Сага о винленде 1 сезон");
         UserAccountAnime userAccountAnime = new UserAccountAnime(
                 2,
                 false,
@@ -70,7 +70,7 @@ public class UserAccountAnimeServiceTest {
                 anime.getId(),
                 user.getId()
         );
-        userAccountAnimeService.add(userAccountAnime);
+        userAccountAnimeRepository.add(userAccountAnime);
         UserAccountAnime userAccountAnimeUpdate = new UserAccountAnime(
                 20,
                 true,
@@ -81,10 +81,10 @@ public class UserAccountAnimeServiceTest {
                 anime.getId(),
                 user.getId()
         );
-        userAccountAnimeService.update(userAccountAnimeUpdate);
+        userAccountAnimeRepository.update(userAccountAnimeUpdate);
 
         assertEquals(userAccountAnimeUpdate.toString(),
-                userAccountAnimeService.getByAnimeIdAndUserId(
+                userAccountAnimeRepository.getByAnimeIdAndUserId(
                         anime.getId(),
                         user.getId()).toString()
         );
@@ -92,13 +92,13 @@ public class UserAccountAnimeServiceTest {
 
     @Test
     public void removeUserAnime() {
-        Anime anime = animeService.findByName("Сага о винленде 1 сезон");
-        UserAccountAnime userAnimeFromDB = userAccountAnimeService.getByAnimeIdAndUserId(
+        Anime anime = animeRepository.findByName("Сага о винленде 1 сезон");
+        UserAccountAnime userAnimeFromDB = userAccountAnimeRepository.getByAnimeIdAndUserId(
                 anime.getId(),
                 user.getId()
         );
-        userAccountAnimeService.remove(userAnimeFromDB);
-        assertNull(userAccountAnimeService.getByAnimeIdAndUserId(
+        userAccountAnimeRepository.remove(userAnimeFromDB);
+        assertNull(userAccountAnimeRepository.getByAnimeIdAndUserId(
                 anime.getId(),
                 user.getId()
         ));
@@ -108,7 +108,7 @@ public class UserAccountAnimeServiceTest {
     @Test
     public void getAllUserAnime() {
 
-        List<UserAccountAnime> userAccountAnimeList = userAccountAnimeService.getAll();
+        List<UserAccountAnime> userAccountAnimeList = userAccountAnimeRepository.getAll();
 
         userAccountAnimeList.stream()
                 .map(UserAccountAnime::toString)

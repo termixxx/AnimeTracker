@@ -2,7 +2,7 @@ package org.example.logic;
 
 
 import org.example.entities.Anime;
-import org.example.service.AnimeService;
+import org.example.repository.AnimeRepository;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -11,8 +11,8 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class AnimeServiceTest {
-    private final AnimeService animeService = new AnimeService();
+public class AnimeRepositoryTest {
+    private final AnimeRepository animeRepository = new AnimeRepository();
 
     @Test
     public void addAndGetByIdAnime() {
@@ -27,8 +27,8 @@ public class AnimeServiceTest {
                 "img");
 
 
-        animeService.add(saga);
-        Anime foundedAnime = animeService.findByName(saga.getName());
+        animeRepository.add(saga);
+        Anime foundedAnime = animeRepository.findByName(saga.getName());
 
 
         assertEquals(saga.toTest(), foundedAnime.toTest());
@@ -36,9 +36,9 @@ public class AnimeServiceTest {
 
     @Test
     public void removeAnime() {
-        Anime saga = animeService.findByName("Сага о винленде 2 сезон");
-        animeService.remove(saga);
-        assertNull(animeService.findByName(saga.getName()));
+        Anime saga = animeRepository.findByName("Сага о винленде 2 сезон");
+        animeRepository.remove(saga);
+        assertNull(animeRepository.findByName(saga.getName()));
     }
 
     @Test
@@ -51,23 +51,23 @@ public class AnimeServiceTest {
                 "Про викингов",
                 LocalDate.of(20018, 8, 11),
                 "img");
-        animeService.add(saga);
+        animeRepository.add(saga);
         Anime newSaga = new Anime(
-                animeService.findByName(saga.getName()).getId(),
+                animeRepository.findByName(saga.getName()).getId(),
                 "Сага о винленде 2 сезон",
                 24,
                 "Фермерство",
                 "Про фермеров",
                 LocalDate.of(2020, 1, 12),
                 "img2");
-        animeService.update(newSaga);
-        assertEquals(newSaga.toTest(), animeService.findByName(newSaga.getName()).toTest());
+        animeRepository.update(newSaga);
+        assertEquals(newSaga.toTest(), animeRepository.findByName(newSaga.getName()).toTest());
     }
 
     @Test
     public void getAllAnime() {
 
-        List<Anime> animeList = animeService.getAll();
+        List<Anime> animeList = animeRepository.getAll();
 
         animeList.stream()
                 .map(Anime::toTest)

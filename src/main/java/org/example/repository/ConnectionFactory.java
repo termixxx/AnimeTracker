@@ -1,4 +1,4 @@
-package org.example.jdbcHelper;
+package org.example.repository;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,8 +12,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionService {
-    private static final Logger logger = LogManager.getLogger(ConnectionService.class);
+public class ConnectionFactory {
+    private static final Logger logger = LogManager.getLogger(ConnectionFactory.class);
 
     public Connection getConnection() {
         var props = new Properties();

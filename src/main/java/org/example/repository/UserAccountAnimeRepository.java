@@ -1,23 +1,21 @@
-package org.example.service;
+package org.example.repository;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.dao.UserAccountAnimeDAO;
 import org.example.entities.UserAccountAnime;
-import org.example.enums.Condition;
-import org.example.jdbcHelper.ConnectionService;
+import org.example.entities.enums.Condition;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class UserAccountAnimeService implements UserAccountAnimeDAO {
-    ConnectionService connectionService = new ConnectionService();
-    Connection connection = connectionService.getConnection();
-    private static final Logger logger = LogManager.getLogger(UserAccountAnimeService.class);
+public class UserAccountAnimeRepository {
+    ConnectionFactory connectionFactory = new ConnectionFactory();
+    Connection connection = connectionFactory.getConnection();
+    private static final Logger logger = LogManager.getLogger(UserAccountAnimeRepository.class);
 
-    @Override
+
     public void add(UserAccountAnime userAccountAnime) {
         String userAnimeQuery = "INSERT INTO user_account_anime "
                 + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -38,7 +36,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
         }
     }
 
-    @Override
+
     public List<UserAccountAnime> getAll() {
         String userAccountAnimeQuery = "SELECT number_of_episodes_viewed, favorite, " +
                 "comment, date_added, condition, rating, " +
@@ -67,7 +65,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
         return userAccountAnimeList;
     }
 
-    @Override
+
     public UserAccountAnime getByAnimeIdAndUserId(Long animeId, Long userId) {
         UserAccountAnime userAccountAnime = null;
         String userAccountAnimeQuery = "SELECT number_of_episodes_viewed, favorite, " +
@@ -99,7 +97,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
         return userAccountAnime;
     }
 
-    @Override
+
     public void update(UserAccountAnime userAccountAnime) {
         String userAccountQuery =
                 "UPDATE user_account_anime SET number_of_episodes_viewed = ?,"
@@ -127,7 +125,7 @@ public class UserAccountAnimeService implements UserAccountAnimeDAO {
         }
     }
 
-    @Override
+
     public void remove(UserAccountAnime userAccountAnime) {
         String userAccountQuery = "DELETE FROM user_account_anime " +
                 "WHERE anime_id = ? AND user_account_id = ?";

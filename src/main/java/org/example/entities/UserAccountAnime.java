@@ -1,6 +1,6 @@
 package org.example.entities;
 
-import org.example.enums.Condition;
+import org.example.entities.enums.Condition;
 
 import java.time.LocalDate;
 

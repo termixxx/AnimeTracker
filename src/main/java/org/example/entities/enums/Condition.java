@@ -1,4 +1,4 @@
-package org.example.enums;
+package org.example.entities.enums;
 
 public enum Condition {
     WATCHING("Смотрю"),
