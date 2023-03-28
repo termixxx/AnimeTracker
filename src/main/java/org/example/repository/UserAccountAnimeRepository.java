@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.entities.UserAccountAnime;
 import org.example.entities.enums.Condition;
+import org.example.utils.ConnectionBuilder;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,9 +12,12 @@ import java.util.List;
 
 
 public class UserAccountAnimeRepository {
-    ConnectionFactory connectionFactory = new ConnectionFactory();
-    Connection connection = connectionFactory.getConnection();
+    private final Connection connection;
     private static final Logger logger = LogManager.getLogger(UserAccountAnimeRepository.class);
+
+    public UserAccountAnimeRepository(ConnectionBuilder connectionBuilder) {
+        this.connection = connectionBuilder.getConnection();
+    }
 
 
     public void add(UserAccountAnime userAccountAnime) {

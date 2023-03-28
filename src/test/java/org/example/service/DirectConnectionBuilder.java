@@ -1,7 +1,6 @@
-package org.example.repository;
+package org.example.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.example.utils.ConnectionBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,17 +11,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionFactory {
-    private static final Logger logger = LogManager.getLogger(ConnectionFactory.class);
-
+public class DirectConnectionBuilder implements ConnectionBuilder {
+    @Override
     public Connection getConnection() {
         var props = new Properties();
 
-        logger.info("Подключение к базе данных . . .");
         try (InputStream in = Files.newInputStream(Paths.get("src/main/resources/db.properties"))) {
             props.load(in);
         } catch (IOException e) {
-            logger.error("Ошибка загрузки настроек подключения к базе данных:\n" + e.getMessage());
+            e.printStackTrace();
         }
 
         String url = props.getProperty("jdbc.url");
@@ -32,9 +29,8 @@ public class ConnectionFactory {
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(url, username, password);
-            logger.info("Подключение к базе данных прошло успешно");
         } catch (SQLException e) {
-            logger.error("Ошибка подключения к базе данных:\n" + e.getMessage());
+            e.printStackTrace();
         }
 
         return connection;

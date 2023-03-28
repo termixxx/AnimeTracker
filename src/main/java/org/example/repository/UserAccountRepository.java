@@ -3,6 +3,7 @@ package org.example.repository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.entities.UserAccount;
+import org.example.utils.ConnectionBuilder;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,9 +11,13 @@ import java.util.List;
 
 
 public class UserAccountRepository {
-    ConnectionFactory connectionFactory = new ConnectionFactory();
-    Connection connection = connectionFactory.getConnection();
+
+    private final Connection connection;
     private static final Logger logger = LogManager.getLogger(UserAccountRepository.class);
+
+    public UserAccountRepository(ConnectionBuilder connectionBuilder) {
+        connection = connectionBuilder.getConnection();
+    }
 
 
     public void add(UserAccount userAccount) {

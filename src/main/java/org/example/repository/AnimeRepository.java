@@ -3,6 +3,7 @@ package org.example.repository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.entities.Anime;
+import org.example.utils.ConnectionBuilder;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,9 +11,12 @@ import java.util.List;
 
 
 public class AnimeRepository {
-    ConnectionFactory connectionFactory = new ConnectionFactory();
-    Connection connection = connectionFactory.getConnection();
     private static final Logger logger = LogManager.getLogger(AnimeRepository.class);
+    private final Connection connection;
+
+    public AnimeRepository(ConnectionBuilder connectionBuilder) {
+        this.connection = connectionBuilder.getConnection();
+    }
 
 
     public void add(Anime anime) {
