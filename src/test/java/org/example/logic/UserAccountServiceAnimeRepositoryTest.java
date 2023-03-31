@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class UserAccountAnimeRepositoryTest {
+public class UserAccountServiceAnimeRepositoryTest {
     UserAccountAnimeRepository userAccountAnimeRepository = new UserAccountAnimeRepository(new DirectConnectionBuilder());
     AnimeRepository animeRepository = new AnimeRepository(new DirectConnectionBuilder());
     UserAccountRepository userAccountRepository = new UserAccountRepository(new DirectConnectionBuilder());

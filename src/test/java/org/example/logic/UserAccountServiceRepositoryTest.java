@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class UserAccountRepositoryTest {
+public class UserAccountServiceRepositoryTest {
     UserAccountRepository userAccountRepository = new UserAccountRepository(new DirectConnectionBuilder());
     UserAccount userAccount = new UserAccount(null,
             "Jastin", "bak12", "pas", "img");

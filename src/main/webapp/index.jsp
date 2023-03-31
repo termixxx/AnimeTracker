@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib prefix="gn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <head>
@@ -12,5 +12,7 @@
 %>
 <p><%= greetings %>
 </p>
+<form method="get" action="${pageContext.request.contextPath}/signup">
+    <button type="submit"> зарегистрироваться</button>
+</form>
 </body>
-</html>

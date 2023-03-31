@@ -20,7 +20,7 @@ public class UserAccountRepository {
     }
 
 
-    public void add(UserAccount userAccount) {
+    public boolean add(UserAccount userAccount) {
         String userQuery = "INSERT INTO user_account(name, login, password, picture_url)"
                 + "VALUES(?, ?, ?, ?)";
         try {
@@ -31,9 +31,10 @@ public class UserAccountRepository {
             preparedStatement.setString(3, userAccount.getPassword());
             preparedStatement.setString(4, userAccount.getPictureURL());
 
-            preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate() != 0;
         } catch (SQLException e) {
             logger.error("Ошибка добавления пользователя:\n" + e.getMessage());
+            return false;
         }
     }
 
