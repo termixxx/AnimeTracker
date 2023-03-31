@@ -34,7 +34,7 @@ public class UserAccountServiceAnimeRepositoryTest {
     public void addAndGetByIdAnimeAndIdUser() {
         add();
         long animeId = animeRepository.findByName(saga.getName()).getId();
-        long userId = userAccountRepository.findByName(user.getName()).getId();
+        long userId = userAccountRepository.findByLogin(user.getName()).getId();
 
         UserAccountAnime userAccountAnime = new UserAccountAnime(
                 2,
@@ -64,7 +64,7 @@ public class UserAccountServiceAnimeRepositoryTest {
 
     private void clear(UserAccountAnime userAnimeFromDB) {
         animeRepository.remove(animeRepository.findByName(saga.getName()));
-        userAccountRepository.remove(userAccountRepository.findByName(user.getName()));
+        userAccountRepository.remove(userAccountRepository.findByLogin(user.getName()));
         userAccountAnimeRepository.remove(userAnimeFromDB);
     }
 
@@ -72,7 +72,7 @@ public class UserAccountServiceAnimeRepositoryTest {
     public void updateUserAnime() {
         add();
         long animeId = animeRepository.findByName(saga.getName()).getId();
-        long userId = userAccountRepository.findByName(user.getName()).getId();
+        long userId = userAccountRepository.findByLogin(user.getName()).getId();
 
         UserAccountAnime userAccountAnime = new UserAccountAnime(
                 2,
@@ -110,7 +110,7 @@ public class UserAccountServiceAnimeRepositoryTest {
     public void removeUserAnime() {
         add();
         long animeId = animeRepository.findByName(saga.getName()).getId();
-        long userId = userAccountRepository.findByName(user.getName()).getId();
+        long userId = userAccountRepository.findByLogin(user.getName()).getId();
 
         UserAccountAnime userAccountAnime = new UserAccountAnime(
                 2,

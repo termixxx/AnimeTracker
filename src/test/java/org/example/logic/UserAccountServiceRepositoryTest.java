@@ -18,19 +18,19 @@ public class UserAccountServiceRepositoryTest {
     @Test
     public void addAndGetUserById() {
         userAccountRepository.add(userAccount);
-        UserAccount founded = userAccountRepository.findByName(userAccount.getName());
+        UserAccount founded = userAccountRepository.findByLogin(userAccount.getName());
         assertEquals(userAccount.toTest(), founded.toTest());
 
-        userAccountRepository.remove(userAccountRepository.findByName(userAccount.getName()));
+        userAccountRepository.remove(userAccountRepository.findByLogin(userAccount.getName()));
     }
 
     @Test
     public void removeUser() {
         userAccountRepository.add(userAccount);
 
-        UserAccount userAccountFounded = userAccountRepository.findByName(userAccount.getName());
+        UserAccount userAccountFounded = userAccountRepository.findByLogin(userAccount.getName());
         userAccountRepository.remove(userAccountFounded);
-        assertNull(userAccountRepository.findByName(userAccountFounded.getName()));
+        assertNull(userAccountRepository.findByLogin(userAccountFounded.getName()));
     }
 
     @Test
@@ -38,7 +38,7 @@ public class UserAccountServiceRepositoryTest {
         userAccountRepository.add(userAccount);
 
         UserAccount userAccountNew = new UserAccount(
-                userAccountRepository.findByName(userAccount.getName()).getId(),
+                userAccountRepository.findByLogin(userAccount.getName()).getId(),
                 "Robin",
                 "bak12",
                 "pas",
@@ -46,9 +46,9 @@ public class UserAccountServiceRepositoryTest {
         userAccountRepository.update(userAccountNew);
 
         assertEquals(userAccountNew.toTest(),
-                userAccountRepository.findByName(userAccountNew.getName()).toTest());
+                userAccountRepository.findByLogin(userAccountNew.getName()).toTest());
 
-        userAccountRepository.remove(userAccountRepository.findByName(userAccountNew.getName()));
+        userAccountRepository.remove(userAccountRepository.findByLogin(userAccountNew.getName()));
     }
 
     @Test

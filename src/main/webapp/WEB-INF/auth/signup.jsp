@@ -5,7 +5,7 @@
     <title>Регистрация</title>
     <style>
         html, body {
-            height: 85%;
+            height: 100%;
             margin: 0;
         }
 
@@ -48,7 +48,7 @@
 
 
         input[type="submit"] {
-            background-color: #4CAF50;
+            background-color: #007bff;
             color: white;
             padding: 12px 20px;
             border: none;
@@ -60,7 +60,7 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #0069d9;
         }
 
         a {
@@ -96,7 +96,7 @@
 </c:if>
 <c:if test="${requestScope.getOrDefault('userCreated',false)==true}">
     <div>
-        <form method="get" action="${pageContext.request.contextPath}/user/welcome">
+        <form method="get" action="${pageContext.request.contextPath}/login">
             <h4 style="justify-content: center; display:flex;">Вы зарегистрированы!</h4>
             <div style=" justify-content: center; display:flex;">
                 <input type="submit" value="войти">

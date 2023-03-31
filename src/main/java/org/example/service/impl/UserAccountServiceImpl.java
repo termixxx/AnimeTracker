@@ -10,8 +10,24 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public boolean createUser(UserAccount userAccount) {
-        userAccount.setPassword(String.valueOf(userAccount.getPassword().hashCode()));
+        userAccount.setPassword(getPasswordHash(userAccount.getPassword()));
         userAccount.setPictureURL("https://clck.ru/33vB6K");
         return userAccountRepository.add(userAccount);
     }
+
+    @Override
+    public UserAccount loginUser(String login, String password) {
+        UserAccount userAccount = userAccountRepository.findByLogin(login);
+        if (userAccount != null &&
+                userAccount.getPassword().equals(getPasswordHash(password))) {
+            return userAccount;
+        }
+        return null;
+    }
+
+    private static String getPasswordHash(String password) {
+        return String.valueOf(password.hashCode());
+    }
+
+
 }

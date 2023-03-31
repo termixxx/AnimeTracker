@@ -90,14 +90,14 @@ public class UserAccountRepository {
     }
 
 
-    public UserAccount findByName(String name) {
+    public UserAccount findByLogin(String login) {
         UserAccount userAccount = null;
         String userQuery = "SELECT id, name, login, password, picture_url" +
-                " FROM user_account WHERE name = ?";
+                " FROM user_account WHERE login = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(userQuery);
 
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, login);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -110,7 +110,7 @@ public class UserAccountRepository {
                         resultSet.getString("picture_url"));
             }
         } catch (SQLException e) {
-            logger.error("Ошибка нахождения пользователя по name:\n" + e.getMessage());
+            logger.error("Ошибка нахождения пользователя по логину:\n" + e.getMessage());
         }
         return userAccount;
     }
