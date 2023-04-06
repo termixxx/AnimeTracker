@@ -29,5 +29,8 @@ public class UserAccountServiceImpl implements UserAccountService {
         return String.valueOf(password.hashCode());
     }
 
-
+    @Override
+    public UserAccount findByLogin(String login) {
+        return userAccountRepository.findByLogin(login);
+    }
 }

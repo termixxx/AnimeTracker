@@ -3,8 +3,7 @@ package org.example.entities.enums;
 public enum Condition {
     WATCHING("Смотрю"),
     PLANNED("Планирую"),
-    WATCHED("Посмотрел(а)"),
-    ABANDONED("Забросил(а)");
+    WATCHED("Посмотрел(а)");
     private final String str;
 
     Condition(String str) {

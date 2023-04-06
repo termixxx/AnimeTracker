@@ -86,7 +86,7 @@
             <input type="text" id="nickname" name="nickname">
             <br>
             <div style="justify-content: center; display: flex">
-                <input type="submit" value="зарегистрироваться">
+                <input type="submit" value="Зарегистрироваться">
             </div>
         </form>
         <p style="margin-left: 10px;">

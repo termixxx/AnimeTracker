@@ -101,6 +101,36 @@ public class UserAccountAnimeRepository {
         return userAccountAnime;
     }
 
+    public List<UserAccountAnime> getByUserId(Long userId) {
+        String userAccountAnimeQuery = "SELECT number_of_episodes_viewed, favorite, " +
+                "comment, date_added, condition, rating, " +
+                "anime_id, user_account_id " +
+                "FROM user_account_anime " +
+                "WHERE user_account_id = ?";
+        List<UserAccountAnime> userAccountAnimeList = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(userAccountAnimeQuery);
+
+            preparedStatement.setLong(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                UserAccountAnime userAccountAnime = new UserAccountAnime(
+                        resultSet.getInt("number_of_episodes_viewed"),
+                        resultSet.getBoolean("favorite"),
+                        resultSet.getString("comment"),
+                        resultSet.getDate("date_added").toLocalDate(),
+                        Condition.valueOf(resultSet.getString("condition")),
+                        resultSet.getInt("rating"),
+                        resultSet.getLong("anime_id"),
+                        resultSet.getLong("user_account_id")
+                );
+                userAccountAnimeList.add(userAccountAnime);
+            }
+        } catch (SQLException e) {
+            logger.error("Ошибка получения аниме по userId:\n" + e.getMessage());
+        }
+        return userAccountAnimeList;
+    }
 
     public void update(UserAccountAnime userAccountAnime) {
         String userAccountQuery =

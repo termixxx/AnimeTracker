@@ -54,7 +54,7 @@
     <h1>Аниме трекер</h1>
     <p>Следите за всеми вашими любимыми аниме!</p>
     <a href="signup">
-        <button class="start-btn">Start</button>
+        <button class="start-btn">Начать</button>
     </a>
 </div>
 </body>
