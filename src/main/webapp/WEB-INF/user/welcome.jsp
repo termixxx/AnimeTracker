@@ -150,13 +150,8 @@
         <h2>Добавление аниме</h2>
         <form method="post" action="${pageContext.request.contextPath}/user/welcome">
             <div>
-                <label for="anime-select">Выберите аниме:</label>
-                <select id="anime-select" name="animeSelect">
-                    <jsp:useBean id="animeList" scope="request" type="java.util.List"/>
-                    <c:forEach var="anime" items="${animeList}">
-                        <option value="${anime.getName()}">${anime.getName()}</option>
-                    </c:forEach>
-                </select>
+                <label for="anime-select">Название аниме:</label>
+                <input type="text" id="anime-select" name="animeSelect">
             </div>
             <div>
                 <label for="episodes-watched">Кол-во просмотренных эпизодов:</label>

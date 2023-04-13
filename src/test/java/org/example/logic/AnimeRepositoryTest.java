@@ -2,47 +2,43 @@ package org.example.logic;
 
 
 import org.example.entities.Anime;
-import org.example.repository.AnimeRepository;
-import org.example.service.DirectConnectionBuilder;
 import org.junit.Test;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.example.resourses.Data.anime;
+import static org.example.resourses.Data.animeRepository;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class AnimeRepositoryTest {
-    private final AnimeRepository animeRepository = new AnimeRepository(new DirectConnectionBuilder());
 
-    Anime saga = new Anime(null, "Сага о винленде 1 сезон", 48,
-            "Приключение", "Про викингов",
-            LocalDate.of(20018, 8, 11), "img");
 
     @Test
     public void addAndGetByIdAnime() {
-        animeRepository.add(saga);
-        Anime foundedAnime = animeRepository.findByName(saga.getName());
-        assertEquals(saga.toTest(), foundedAnime.toTest());
+        animeRepository.add(anime);
+        Anime foundedAnime = animeRepository.findByName(anime.getName());
+        assertEquals(anime.toTest(), foundedAnime.toTest());
 
-        animeRepository.remove(animeRepository.findByName(saga.getName()));
+        animeRepository.remove(animeRepository.findByName(anime.getName()));
     }
 
     @Test
     public void removeAnime() {
-        animeRepository.add(saga);
+        animeRepository.add(anime);
 
-        Anime sagaFounded = animeRepository.findByName(saga.getName());
+        Anime sagaFounded = animeRepository.findByName(anime.getName());
         animeRepository.remove(sagaFounded);
-        assertNull(animeRepository.findByName(saga.getName()));
+        assertNull(animeRepository.findByName(anime.getName()));
     }
 
     @Test
     public void updateAnime() {
-        animeRepository.add(saga);
+        animeRepository.add(anime);
 
         Anime newSaga = new Anime(
-                animeRepository.findByName(saga.getName()).getId(), "Сага о винленде 2 сезон",
+                animeRepository.findByName(anime.getName()).getId(), "Сага о винленде 2 сезон",
                 24, "Фермерство", "Про фермеров",
                 LocalDate.of(2020, 1, 12), "img2");
 
@@ -55,9 +51,6 @@ public class AnimeRepositoryTest {
     @Test
     public void getAllAnime() {
         List<Anime> animeList = animeRepository.getAll();
-
-        animeList.stream()
-                .map(Anime::toTest)
-                .forEach(System.out::println);
+        assertEquals(12, animeList.size());
     }
 }

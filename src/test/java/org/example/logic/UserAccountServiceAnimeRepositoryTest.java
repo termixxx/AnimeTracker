@@ -1,13 +1,7 @@
 package org.example.logic;
 
-import org.example.entities.Anime;
-import org.example.entities.UserAccount;
 import org.example.entities.UserAccountAnime;
 import org.example.entities.enums.Condition;
-import org.example.repository.AnimeRepository;
-import org.example.repository.UserAccountAnimeRepository;
-import org.example.repository.UserAccountRepository;
-import org.example.service.DirectConnectionBuilder;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -15,25 +9,18 @@ import org.junit.runners.MethodSorters;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.example.resourses.Data.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserAccountServiceAnimeRepositoryTest {
-    UserAccountAnimeRepository userAccountAnimeRepository = new UserAccountAnimeRepository(new DirectConnectionBuilder());
-    AnimeRepository animeRepository = new AnimeRepository(new DirectConnectionBuilder());
-    UserAccountRepository userAccountRepository = new UserAccountRepository(new DirectConnectionBuilder());
 
-    Anime saga = new Anime(null, "Сага о винленде 1 сезон", 48,
-            "Приключение", "Про викингов",
-            LocalDate.of(20018, 8, 11), "img");
-    UserAccount user = new UserAccount(null,
-            "Jastin", "bak12", "pas", "img");
 
     @Test
     public void addAndGetByIdAnimeAndIdUser() {
         add();
-        long animeId = animeRepository.findByName(saga.getName()).getId();
+        long animeId = animeRepository.findByName(anime.getName()).getId();
         long userId = userAccountRepository.findByLogin(user.getName()).getId();
 
         UserAccountAnime userAccountAnime = new UserAccountAnime(
@@ -58,12 +45,12 @@ public class UserAccountServiceAnimeRepositoryTest {
     }
 
     private void add() {
-        animeRepository.add(saga);
+        animeRepository.add(anime);
         userAccountRepository.add(user);
     }
 
     private void clear(UserAccountAnime userAnimeFromDB) {
-        animeRepository.remove(animeRepository.findByName(saga.getName()));
+        animeRepository.remove(animeRepository.findByName(anime.getName()));
         userAccountRepository.remove(userAccountRepository.findByLogin(user.getName()));
         userAccountAnimeRepository.remove(userAnimeFromDB);
     }
@@ -71,7 +58,7 @@ public class UserAccountServiceAnimeRepositoryTest {
     @Test
     public void updateUserAnime() {
         add();
-        long animeId = animeRepository.findByName(saga.getName()).getId();
+        long animeId = animeRepository.findByName(anime.getName()).getId();
         long userId = userAccountRepository.findByLogin(user.getName()).getId();
 
         UserAccountAnime userAccountAnime = new UserAccountAnime(
@@ -109,7 +96,7 @@ public class UserAccountServiceAnimeRepositoryTest {
     @Test
     public void removeUserAnime() {
         add();
-        long animeId = animeRepository.findByName(saga.getName()).getId();
+        long animeId = animeRepository.findByName(anime.getName()).getId();
         long userId = userAccountRepository.findByLogin(user.getName()).getId();
 
         UserAccountAnime userAccountAnime = new UserAccountAnime(
@@ -140,9 +127,6 @@ public class UserAccountServiceAnimeRepositoryTest {
     public void getAllUserAnime() {
 
         List<UserAccountAnime> userAccountAnimeList = userAccountAnimeRepository.getAll();
-
-        userAccountAnimeList.stream()
-                .map(UserAccountAnime::toString)
-                .forEach(System.out::println);
+        assertEquals(8, userAccountAnimeList.size());
     }
 }

@@ -103,7 +103,7 @@ public class AnimeRepository {
         Anime anime = null;
         String animeQuery = "SELECT id, name, count_of_series, " +
                 "genres, description, release_year, picture_url " +
-                "FROM anime WHERE name = ?";
+                "FROM anime WHERE name ILIKE concat('%',?,'%')";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(animeQuery);
 

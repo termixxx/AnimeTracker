@@ -1,20 +1,16 @@
 package org.example.logic;
 
 import org.example.entities.UserAccount;
-import org.example.repository.UserAccountRepository;
-import org.example.service.DirectConnectionBuilder;
 import org.junit.Test;
 
 import java.util.List;
 
+import static org.example.resourses.Data.userAccount;
+import static org.example.resourses.Data.userAccountRepository;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class UserAccountServiceRepositoryTest {
-    UserAccountRepository userAccountRepository = new UserAccountRepository(new DirectConnectionBuilder());
-    UserAccount userAccount = new UserAccount(null,
-            "Jastin", "bak12", "pas", "img");
-
     @Test
     public void addAndGetUserById() {
         userAccountRepository.add(userAccount);
@@ -54,8 +50,6 @@ public class UserAccountServiceRepositoryTest {
     @Test
     public void getAll() {
         List<UserAccount> userAccountList = userAccountRepository.getAll();
-        userAccountList.stream()
-                .map(UserAccount::toString)
-                .forEach(System.out::println);
+        assertEquals(20, userAccountList.size());
     }
 }

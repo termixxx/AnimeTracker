@@ -76,23 +76,25 @@ public class WelcomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Anime anime = animeService.findByName(req.getParameter("animeSelect"));
+
         int episodesWatched = Integer.parseInt(req.getParameter("episodesWatched"));
-        boolean favorite = Boolean.parseBoolean(req.getParameter("favorite"));
+        boolean favorite = "on".equals(req.getParameter("favorite"));
         String comment = req.getParameter("comment");
         Condition condition = Condition.valueOf(req.getParameter("condition"));
         int rating = Integer.parseInt(req.getParameter("rating"));
         String login = String.valueOf(req.getSession().getAttribute("loggedUser"));
-
-        userAccountAnimeService.save(new UserAccountAnime(
-                episodesWatched,
-                favorite,
-                comment,
-                LocalDate.now(),
-                condition,
-                rating,
-                anime.getId(),
-                accountService.findByLogin(login).getId()
-        ));
+        if (anime != null) {
+            userAccountAnimeService.save(new UserAccountAnime(
+                    episodesWatched,
+                    favorite,
+                    comment,
+                    LocalDate.now(),
+                    condition,
+                    rating,
+                    anime.getId(),
+                    accountService.findByLogin(login).getId()
+            ));
+        }
 
         resp.sendRedirect(req.getContextPath() + "/user/welcome");
     }
