@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -63,6 +64,9 @@
         <label for="password">password:</label>
         <input type="password" id="password" name="password">
         <br>
+        <c:if test="${requestScope.getOrDefault('loginAttempt',true)==false}">
+            <p>Введены неверный логин или пароль</p>
+        </c:if>
         <input type="submit" value="Войти">
     </form>
 </div>

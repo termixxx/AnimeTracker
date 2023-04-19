@@ -94,9 +94,12 @@ public class WelcomeServlet extends HttpServlet {
                     anime.getId(),
                     accountService.findByLogin(login).getId()
             ));
+            resp.sendRedirect(req.getContextPath() + "/user/welcome");
+        } else {
+            req.getSession().setAttribute("error", "Аниме не найдено");
+            resp.sendRedirect(req.getContextPath() + "/error");
         }
 
-        resp.sendRedirect(req.getContextPath() + "/user/welcome");
     }
 }
 

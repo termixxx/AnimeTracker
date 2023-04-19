@@ -14,19 +14,19 @@ public class UserAccountServiceRepositoryTest {
     @Test
     public void addAndGetUserById() {
         userAccountRepository.add(userAccount);
-        UserAccount founded = userAccountRepository.findByLogin(userAccount.getName());
+        UserAccount founded = userAccountRepository.findByLogin(userAccount.getLogin());
         assertEquals(userAccount.toTest(), founded.toTest());
 
-        userAccountRepository.remove(userAccountRepository.findByLogin(userAccount.getName()));
+        userAccountRepository.remove(userAccountRepository.findByLogin(userAccount.getLogin()));
     }
 
     @Test
     public void removeUser() {
         userAccountRepository.add(userAccount);
 
-        UserAccount userAccountFounded = userAccountRepository.findByLogin(userAccount.getName());
+        UserAccount userAccountFounded = userAccountRepository.findByLogin(userAccount.getLogin());
         userAccountRepository.remove(userAccountFounded);
-        assertNull(userAccountRepository.findByLogin(userAccountFounded.getName()));
+        assertNull(userAccountRepository.findByLogin(userAccountFounded.getLogin()));
     }
 
     @Test
@@ -34,7 +34,7 @@ public class UserAccountServiceRepositoryTest {
         userAccountRepository.add(userAccount);
 
         UserAccount userAccountNew = new UserAccount(
-                userAccountRepository.findByLogin(userAccount.getName()).getId(),
+                userAccountRepository.findByLogin(userAccount.getLogin()).getId(),
                 "Robin",
                 "bak12",
                 "pas",
@@ -42,14 +42,14 @@ public class UserAccountServiceRepositoryTest {
         userAccountRepository.update(userAccountNew);
 
         assertEquals(userAccountNew.toTest(),
-                userAccountRepository.findByLogin(userAccountNew.getName()).toTest());
+                userAccountRepository.findByLogin(userAccountNew.getLogin()).toTest());
 
-        userAccountRepository.remove(userAccountRepository.findByLogin(userAccountNew.getName()));
+        userAccountRepository.remove(userAccountRepository.findByLogin(userAccountNew.getLogin()));
     }
 
     @Test
     public void getAll() {
         List<UserAccount> userAccountList = userAccountRepository.getAll();
-        assertEquals(20, userAccountList.size());
+        assertEquals(21, userAccountList.size());
     }
 }

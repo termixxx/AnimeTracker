@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
             req.getSession().setAttribute("loggedUser", userAccount.getLogin());
             resp.sendRedirect(req.getContextPath() + "/user/welcome");
         } else {
-            req.setAttribute("loggingAttempt", "Неверные данные");
+            req.setAttribute("loginAttempt", false);
             requestDispatcher = req.getRequestDispatcher("WEB-INF/auth/login.jsp");
             requestDispatcher.forward(req, resp);
         }
