@@ -8,14 +8,17 @@
 <body class="bg-danger">
 <div class="d-flex align-items-center justify-content-center h-100 ">
     <div class="d-flex flex-column bg-light  p-5">
-        <h1 class="text align-self-center p-2 shadow-lg">
+        <h1 class="text align-self-center p-2 shadow-lg mt-5">
             <%=  request.getSession().getAttribute("error") %>
         </h1>
-        <a href="${pageContext.request.contextPath}/user/welcome">
-            <button class="btn btn-primary align-self-center p-2 " type="button" name="button">Вернуться на главную
+        <a class="align-self-center p-2 " href="${pageContext.request.contextPath}/user/welcome">
+            <button class="btn btn-primary" type="button" name="button">Вернуться на главную
             </button>
         </a>
+
+        <img src="https://i.postimg.cc/B6mhGR43/Gb-b7o-Y-r-B4.jpg" class="card-img align-content-center mt-1">
     </div>
+
 </div>
 </body>
 </html>
